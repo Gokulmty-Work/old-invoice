@@ -1,0 +1,165 @@
+<mat-card>
+
+	<h2>Add/Edit Product Master</h2>
+	
+	<div class="container">
+	  <form novalidate>
+		<div class="row">
+		  <div class="col-25">
+			<label for="skuId">SKU_ID</label>
+		  </div>
+		  <div class="col-75">
+			<mat-form-field>
+				<input type="text" matInput autocomplete="off" placeholder="masterId" required name="masterId" [(ngModel)]="product.masterId"/>
+			</mat-form-field>
+
+		</div>
+	
+		</div>
+		
+		<div class="row">
+		  <div class="col-25">
+			<label for="name">Name</label>
+		  </div>
+		  <div class="col-75">
+			<mat-form-field>
+				<input type="text" matInput autocomplete="off" placeholder="name" required name="name" [(ngModel)]="product.name"/>
+			</mat-form-field>
+		</div>
+	</div>
+		<div class="row">
+			<div class="col-25">
+			  <label for="category">Category</label>
+			</div>
+			<div class="col-75">
+				<mat-form-field>
+					<mat-select placeholder="category" [(ngModel)]="product.category" name="product.category"> 
+					<mat-option *ngFor="let cat of categories" [value]="cat" name="cat">{{cat}}</mat-option>
+					</mat-select>
+				</mat-form-field>
+		  </div>
+	
+		</div>
+		
+		<div class="row">
+		  <div class="col-25">
+			<label for="active">Is Active</label>
+		  </div>
+		  <div class="col-75">
+			<mat-label>Active</mat-label>
+		<mat-slide-toggle  [(ngModel)]="product.active" name="product.active"></mat-slide-toggle>
+	 		</div>
+		</div>
+	
+	  <div class="row">
+			<div class="col-25">
+			  <label for="active">Reorder Threshold</label>
+			</div>
+			<div class="col-75">
+				<mat-form-field>
+					<input type="number" min=0 matInput autocomplete="off" placeholder="reorderThreshold" name="reorderThreshold" required [(ngModel)]="product.reorderThreshold"/>
+				</mat-form-field>
+					</div>
+		  </div>
+
+		  <div class="row">
+			<div class="col-25">
+			  <label for="description">Description</label>
+			</div>
+			<div class="col-75">
+				<mat-form-field>
+					<textarea matInput placeholder="description" [(ngModel)]="product.description" name="description"></textarea>
+				</mat-form-field>
+					</div>
+		  </div>
+
+	
+		<div class="row">
+			<div class="col-100">
+		
+			<button mat-raised-button color="primary" type="submit" (click)="submit()">save</button> 
+			&nbsp;&nbsp;&nbsp;	
+			<button mat-raised-button type="button" (click)="cancel()">cancel</button>
+			&nbsp;&nbsp;&nbsp;		
+			<button mat-raised-button type="button" color="warn" (click)="delete()">delete</button>
+			
+			</div>
+	</div>
+	  </form>
+	  
+	</div>
+	</mat-card>
+	
+	<!-- <mat-card>
+		<div class="container">
+			<div class="row" >
+			 <button mat-raised-button type="button" (click)="cancel()">cancel/GoBack</button>  
+			</div>
+		  </div>
+	</mat-card> -->
+
+
+
+
+<!-- 
+__________________________________________________________________
+<mat-card>
+<span mat-card-title>Add Product</span>
+
+<div class="container">
+	<form novalidate>
+		<div class="row">
+			<mat-form-field>
+				<input type="text" matInput autocomplete="off" placeholder="masterId" required name="masterId" [(ngModel)]="product.masterId"/>
+			</mat-form-field>
+		  </div>
+		 
+		
+		
+		<div class="row">
+		<mat-form-field>
+			<input type="text" matInput autocomplete="off" placeholder="name" required name="name" [(ngModel)]="product.name"/>
+		</mat-form-field>
+	  </div>
+	  
+	  <div class="row">
+		<mat-form-field>
+			<mat-select placeholder="category" [(ngModel)]="product.category" name="product.category"> 
+			<mat-option *ngFor="let cat of categories" [value]="cat" name="cat">{{cat}}</mat-option>
+			</mat-select>
+		</mat-form-field>
+  	</div>
+
+	  <div class="row">
+		<mat-label>Active</mat-label>
+		<mat-slide-toggle  [(ngModel)]="product.active" name="product.active"></mat-slide-toggle>
+	  </div>
+	  
+	  <div class="row">
+		<mat-form-field>
+			<input type="number" min=0 matInput autocomplete="off" placeholder="reorderThreshold" name="reorderThreshold" required [(ngModel)]="product.reorderThreshold"/>
+		</mat-form-field>
+	  </div>
+	  
+	  <div class="row">
+		<mat-form-field>
+			<textarea matInput placeholder="description" [(ngModel)]="product.description" name="description"></textarea>
+		</mat-form-field>
+	   </div>
+  
+	  
+	   <div class="row">
+		  
+		<button mat-raised-button color="primary" type="submit" (click)="submit()">save</button> 
+		<span style="width: 10px;"></span>
+		<button mat-raised-button type="button" (click)="cancel()">cancel</button>
+		<span style="width: 10px;"></span>
+		<button mat-raised-button type="button" color="warn" (click)="delete()">delete</button>
+	  </div>
+	</form>
+	
+  </div>
+  
+  
+</mat-card>
+ -->

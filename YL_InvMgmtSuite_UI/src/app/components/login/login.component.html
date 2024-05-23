@@ -1,0 +1,27 @@
+  
+<div class="backgroundImage" style="width: 100%;height: 600px;">
+<div class="divCenterAlign" style="width: 400px;height: 300px;">
+    <h2 class="text-center">Inventory Management</h2>
+    <div class="card">
+      <div class="card-body">
+        <form class="form-group">
+          <div class="alert alert-warning" *ngIf='invalidLogin'>{{errorMessage}}</div>
+          <div class="alert alert-success" *ngIf='loginSuccess'>{{successMessage}}</div>
+          <div class="form-group">
+            <label for="email">User Name :</label>
+            <input type="text" class="form-control" id="email" [(ngModel)]="email" placeholder="Enter email"
+              name="username">
+          </div>
+          <div class="form-group">
+            <label for="pwd">Password:</label>
+            <input type="password" class="form-control" [(ngModel)]="password" id="password" placeholder="Enter password"
+              name="password">
+          </div>
+          <button (click)=handleLogin() mat-raised-button color="primary">Login</button>
+        </form>
+      </div>
+      <a style="font-size: small;color: blue;" (click)="forgotPassword()">Forgot Password</a>
+    </div>
+  </div>
+</div>
+

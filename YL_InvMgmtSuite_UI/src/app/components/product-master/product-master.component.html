@@ -1,0 +1,78 @@
+<div *ngIf="dataReady else scrollMode">
+
+<div id="tabularData" *ngIf="productMasterList.length !=0 else noRecordsMsg" class="container">
+
+<span>
+  <div id="searchBar" style="display:flex;width: 300px;">
+    <span class="material-icons">search</span>
+    <input type="text" name="searchString" placeholder="Type to search..." 
+    [(ngModel)]="searchString" 
+    (change)="search()" />   
+</div>
+ 
+<div>
+<table class="table table-responsive">
+    <thead>
+    <tr>
+     
+      <th scope="col" sortable="skuId" (sort)="onSort($event)">SKU_Id</th>
+      <th scope="col" sortable="name" (sort)="onSort($event)">Name</th>
+      <th scope="col" sortable="category" (sort)="onSort($event)">Category</th>
+      <th scope="col">Inventory </th>
+      <th scope="col">Action</th>
+          
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let product of productMasterList | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize;let i=index"
+    (contextmenu)="onContextMenu($event, product)"
+    >
+      <th scope="row">{{ product.skuId }}</th>
+      <td> {{ product.name }} </td>
+      <td>{{ product.category }}</td>
+      <td [ngStyle]="product.inventory < product.reorderThreshold ? {'background-color':'red'} : {'background-color': 'white'}">{{ product.inventory | number }}</td>
+     
+      <td style="text-align: center;" >
+        <a class="iconButton" (click)="onContextMenu($event,product)" alt="action"> <mat-icon>more_vert</mat-icon></a>
+      </td> 
+     
+    </tr>
+    </tbody>
+  </table>
+  <div style="visibility: hidden; position: fixed"
+  [style.left]="contextMenuPosition.x"
+  [style.top]="contextMenuPosition.y"
+  [matMenuTriggerFor]="contextMenu">
+</div>
+<mat-menu #contextMenu="matMenu" #contextMenu2="matMenu" #contextMenu3="matMenu" #contextMenu4="matMenu">
+	<ng-template matMenuContent let-product="product">
+		<button mat-menu-item  (click)="openAddProdMastComp('edit',product)">Edit</button>
+    <button mat-menu-item (click)="checkIn(product)">Check In</button>
+    <button mat-menu-item (click)="showInventory(product)">View Inventory</button>
+    <button mat-menu-item (click)="generateBarcodes(product)">Generate BarCodes</button>
+	</ng-template>
+</mat-menu>
+<ngb-pagination class="d-flex justify-content-center" (pageChange)="onChangePage($event,page)" [collectionSize]="productMasterList.length" [(page)]="page" [pageSize]="pageSize" [rotate]="true" [ellipses]="false" [boundaryLinks]="true"></ngb-pagination>
+</div>
+</span>  
+
+
+
+</div>
+
+</div>
+
+
+<div class="add-button"> 
+  <button mat-fab color="primary" (click)="openAddProdMastComp('new',null)">
+  <mat-icon>add</mat-icon>
+  </button>
+  </div>
+
+<ng-template #scrollMode>
+<mat-spinner  class="scroller"></mat-spinner>
+</ng-template>
+
+<ng-template #noRecordsMsg>
+  <p>No Records !!! </p>
+</ng-template>

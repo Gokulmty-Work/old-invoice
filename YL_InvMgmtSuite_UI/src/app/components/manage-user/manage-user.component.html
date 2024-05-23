@@ -1,0 +1,257 @@
+<div *ngIf="dataReady else scrollMode" style="width: 100%;height: 100%;">
+
+  <!-- // Start of container block for createEdit -->
+  <div class="container" id="createEditBlock" *ngIf="createEditMode">
+   
+    <form [formGroup]="createUserForm"  (ngSubmit)="onSubmit()">
+  
+  
+  <!-- // Unit of Row  Start  -->
+  <div class="row">
+    <div class="col-25">
+        <label for="name">Name</label>
+    </div>
+    <div class="col-75">
+      <input type="text" formControlName="name" >
+    </div>
+  </div>
+  <!-- // Unit of Row  End -->
+  
+  <!-- // Unit of Row Start  -->
+  <div class="row">
+    <div class="col-25">
+        <label for="email">Email</label>
+    </div>
+    <div class="col-75">
+      <input type="text" formControlName="email" >
+    </div>
+  </div>
+  <!-- // Unit of Row ends   -->
+  
+  <!-- // Unit of Row   -->
+  <div class="row">
+    <div class="col-25">
+        <label for="role">Role</label>
+    </div>
+    <div class="col-75">
+      <span class="input-group-text">Role</span>
+      <select formControlName="role">
+      <option *ngFor="let role of userRoles" [value]="role">{{role}}</option>
+      </select>
+    </div>
+  </div>
+  <!-- // Unit of Row   -->
+  
+  <!-- // Unit of Row Start  -->
+  
+  <!-- // Unit of Row End  -->
+  
+  <!-- // Unit of Row Start  -->
+  <div class="row">
+    <div class="col-25">
+      <div style="padding: 5px;">
+      <span *ngIf="editMode; else createMode">
+        <button type="submit" mat-raised-button color="primary"  [disabled]="createUserForm.invalid">Update</button>
+        </span>
+      </div>
+        
+        <div style="padding: 5px;">
+        <button mat-raised-button color="warn" (click)="cancelCreateEditMode()">Cancel</button>
+        </div>
+        <ng-template #createMode>
+        <button type="submit" mat-raised-button color="primary" [disabled]="createUserForm.invalid">Create</button>
+        </ng-template>
+    </div>
+  </div>
+  <!-- // Unit of Row End  -->
+  
+  
+  </form>
+  
+  </div>  
+  <!-- // End of container block for createEdit -->
+  
+  <!-- // Main Table block starts -->
+   <div id="tableBlock" *ngIf="!createEditMode" class="container">
+     <!-- //Check Valid length -->
+    <div id="tabularData" *ngIf="users.length !=0 else noRecordsMsg">
+      <!-- // Search block -->
+      <div style="display:flex;"> 
+        <span class="input-group-text"> <i class="glyphicon glyphicon-search"></i></span>
+        <input
+                type="text"
+                name="searchString"
+                placeholder="Key"
+                [(ngModel)]="searchString" 
+                style="width: 250px;"
+        />
+      </div>
+      <!-- // End of Search block and start of table  -->
+      <table class="table table-striped table-responsive">
+        <thead>
+        <tr>
+          <th scope="col">Email</th>
+          <th scope="col">Name</th>
+          <th scope="col">Role</th>
+          <th scope="col">Edit</th>
+          <th scope="col">Reset_Password</th>
+          <th scope="col">Delete</th> 
+        </tr>
+      </thead>
+      <tbody>
+
+    <tr *ngFor="let user of users  | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize;">
+          <td >{{user.email}}</td>
+          <td >{{ user.name}}</td>
+          <td >{{ user.role}}</td>
+           
+          <td style="text-align: center;" >
+            <a class="iconButton" (click)="editUser(user)" alt="Edit"> <mat-icon>edit</mat-icon></a>
+          </td> 
+         
+          <td style="text-align: center;" >
+            <a class="iconButton" (click)="resetPassword(user)" alt="Delete"> <mat-icon>refresh</mat-icon></a>
+          </td> 
+         
+          <td style="text-align: center;" >
+            <a class="iconButton" (click)="deleteUser(user)" alt="Delete"> <mat-icon>delete</mat-icon></a>
+          </td> 
+    </tr>
+       </tbody>
+    </table>
+    <div class="paginationEffect" *ngIf="dataReady">
+      <ngb-pagination class="d-flex justify-content-center" (pageChange)="onChangePage($event)" [collectionSize]="users.length" [(page)]="page" [pageSize]="pageSize" [rotate]="true" [ellipses]="false" [boundaryLinks]="true"></ngb-pagination>
+    </div>
+
+    <!-- // End of Table  -->
+  </div>
+  </div>
+  
+  <!-- // Main table block ends -->
+  
+  <!-- // Add button block -->
+  <div class="add-button"> 
+    <button mat-fab color="primary" (click)="addButtonSubmit()">
+    <mat-icon>add</mat-icon>
+    </button>
+    </div>
+  <!-- // Add button block Ends -->
+  
+  </div> 
+  <!-- // dataReady block Ends -->
+  
+  <ng-template #scrollMode>
+    <mat-spinner  class="scroller"></mat-spinner>
+    </ng-template>
+    
+    <ng-template #noRecordsMsg>
+      <p>No Records !!! </p>
+    </ng-template>
+  
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 
+
+____________________________________________________________________________
+<mat-card>
+
+<form [formGroup]="createUserForm"  (ngSubmit)="onSubmit()">
+
+ <div style="display:flex;">
+  
+    <span class="input-group-text">Name</span>
+    <input type="text" formControlName="name" >
+
+    <span style="width: 5px;"> </span>
+   
+    
+    <span class="input-group-text">Email</span>
+    <input type="text" formControlName="email" >
+
+    <span style="width: 5px;"> </span>
+
+    <span class="input-group-text">Role</span>
+     <select formControlName="role" style="width: 125px;"  >
+     <option *ngFor="let role of userRoles" [value]="role">{{role}}</option>
+     </select>
+
+       
+      
+  <span style="width: 5px;"> </span>
+
+  <span *ngIf="editMode; else createMode">
+  <button type="submit" class="btn btn-success" [disabled]="createUserForm.invalid">Update</button>
+  </span>
+  <ng-template #createMode>
+  <button type="submit" class="btn btn-success" [disabled]="createUserForm.invalid">Create</button>
+  </ng-template>
+ 
+</div>
+
+</form>
+<br>
+
+
+
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th scope="col">Email</th>
+      <th scope="col">Name</th>
+      <th scope="col" style="width: 150px;">Role</th>
+      <th scope="col">Resource Name</th>
+      <th scope="col" style="width: 75px;">Edit</th>
+      <th scope="col" style="width: 100px;">Password Reset</th>
+      <th scope="col" style="width: 75px;">Delete</th> 
+    </tr>
+  </thead>
+  <tbody>
+  
+    <tr *ngFor="let user of users  | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize;">
+      <td >{{user.email}}</td>
+      <td >{{ user.name}}</td>
+      <td >{{ user.role}}</td>
+      <td >{{ user.resourceName}}</td>
+      
+           
+        <td>
+        <a class="iconButton" (click)="editUser(user)"><img src="../../assets/system icons windows png/Edit.png" alt="Edit"></a>
+      </td> 
+
+      
+      <td>
+        <a class="iconButton" (click)="resetPassword(user)"><img src="../../assets/system icons windows png/Restart.png" alt="Edit"></a>
+          
+      </td> 
+    
+       <td>
+        <a class="iconButton" (click)="deleteUser(user)"><img src="../../assets/system icons windows png/Trash.png" alt="Delete"></a>
+          
+      </td> 
+
+    </tr>
+   </tbody>
+</table>
+
+
+
+</mat-card>
+<div class="paginationEffect" *ngIf="dataReady">
+  <ngb-pagination class="d-flex justify-content-center" (pageChange)="onChangePage($event)" [collectionSize]="users.length" [(page)]="page" [pageSize]="pageSize" [rotate]="true" [ellipses]="false" [boundaryLinks]="true"></ngb-pagination>
+</div> -->

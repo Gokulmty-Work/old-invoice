@@ -1,0 +1,213 @@
+<div *ngIf="dataReady else scrollMode" style="width: 100%;height: 100%;">
+
+<div>
+    
+    <mat-grid-list [cols]="breakpoint" rowHeight="200px" gutterSize="10px" (window:resize)="onResize($event)">
+   
+    <mat-grid-tile>
+    <mat-card>
+    <mat-card-title>Re-order Thresholds</mat-card-title>
+    <mat-card-content style="margin: auto;" *ngIf="showNotifications">
+    <div >
+      <a class="notification" (click)="reorderNotifications()">
+        <span><mat-icon color="primary" style="font-size: 60px;">notifications_active</mat-icon></span>
+        <span class="badge">{{notificationCount}}</span>
+      </a>
+     </div>
+   </mat-card-content>
+        
+    </mat-card>
+    </mat-grid-tile>
+    
+     
+    <mat-grid-tile>
+      <mat-card>
+    
+    <mat-card-title>Inventory Count</mat-card-title>
+    <mat-card-content style="margin: 20px;" *ngIf="showCounts">
+    <table style="width: 100%;">
+      <tr>
+        <th>Categories</th>
+        <td>{{countData.productCategoryCount}}</td>
+      </tr>
+      <tr>
+        <th>Products</th>
+        <td>{{countData.activeProductCount}}</td>
+      </tr>
+      <tr>
+        <th>Items</th>
+        <td>{{countData.checkedInItemCount}}</td>
+      </tr>
+      <tr>
+        <th>ReEntered Items</th>
+        <td>{{countData.reEnteredItemsCount}}</td>
+      </tr>
+    </table>
+    </mat-card-content>
+    </mat-card>
+    </mat-grid-tile>
+    
+    <mat-grid-tile>
+  
+      <mat-card>
+
+             
+      <div class="btn-group" style="width:100%;height: 20px;font-size: xx-small;" (click)="onButtonGroupClickCheckOut($event)">
+        <button style="width:25%" id="7" class="button">7 Days</button>
+        <button style="width:25%" id="30" class="button">30 Days</button>
+        <button style="width:25%" id="180" class="button">180 Days</button>
+        <button style="width:25%" id="365" class="button">360 Days</button>
+      </div>
+    
+  
+    <ng-container *ngIf="showCheckOutData">
+      <div class="chartjs-container">
+          <canvas baseChart id="pieChartCheckOut"
+              [data]="pieChartDataCheckOut"
+              [labels]="pieChartLabelsCheckOut"
+              [chartType]="pieChartTypeCheckOut"
+              [options] ="pieChartOptionsCheckOut">
+          </canvas> 
+      </div>
+      </ng-container> 
+
+              </mat-card>
+
+      
+    </mat-grid-tile>
+    
+    
+    <mat-grid-tile>
+
+      <mat-card>
+
+        <div class="btn-group" style="width:100%;height: 20px;font-size: xx-small;" (click)="onButtonGroupClickCheckIn($event)">
+          <button style="width:25%" id="7" class="button">7 Days</button>
+          <button style="width:25%" id="30" class="button">30 Days</button>
+          <button style="width:25%" id="180" class="button">180 Days</button>
+          <button style="width:25%" id="365" class="button">360 Days</button>
+        </div>
+      
+    
+      <ng-container *ngIf="showCheckInData">
+        <div class="chartjs-container">
+            <canvas baseChart id="pieChartCheckIn"
+                [data]="pieChartDataCheckIn"
+                [labels]="pieChartLabelsCheckIn"
+                [chartType]="pieChartTypeCheckIn"
+                [options] ="pieChartOptionsCheckIn">
+            </canvas> 
+        </div>
+        </ng-container> 
+
+
+        
+    </mat-card>
+
+     
+    </mat-grid-tile>
+    
+    </mat-grid-list>
+</div>
+    
+ 
+
+<div>
+    <br>
+    <mat-grid-list [cols]="breakpoint4" rowHeight="250px" gutterSize="10px" (window:resize)="onResize($event)">
+
+   <mat-grid-tile colspan="1">
+    <mat-card class="items">
+     <div class="chart-wrapper graphbox" *ngIf="showCheckOutLineGraph" >
+      <canvas baseChart id="checkOutLineGraph"
+          [datasets]="lineChartCheckOutData" 
+          [labels]="lineChartCheckOutLabels" 
+          [options]="lineChartCheckOutOptions"
+          [colors]="lineChartCheckOutColors" 
+          [legend]="lineChartCheckOutLegend" 
+          [chartType]="lineChartCheckOutType" 
+          [plugins]="lineChartCheckOutPlugins">
+      </canvas>
+  </div>
+</mat-card>
+  </mat-grid-tile>
+  
+  <mat-grid-tile colspan="1">
+    <mat-card class="items">
+     <div class="chart-wrapper graphbox" *ngIf="showCheckInLineGraph" >
+      <canvas baseChart id="checkInLineGraph"
+          [datasets]="lineChartCheckInData" 
+          [labels]="lineChartCheckInLabels" 
+          [options]="lineChartCheckInOptions"
+          [colors]="lineChartCheckInColors" 
+          [legend]="lineChartCheckInLegend" 
+          [chartType]="lineChartCheckInType" 
+          [plugins]="lineChartCheckInPlugins">
+      </canvas>
+  </div>
+</mat-card>
+  </mat-grid-tile>
+
+
+  
+  <mat-grid-tile>
+    <mat-card>
+      <mat-card-title>Search Product(Item)</mat-card-title>
+       
+      <div style="display:flex;">
+      <input type="text" class="form-control"  matInput name="skuId" 
+      [(ngModel)]="skuId"/>
+      
+      <button mat-raised-button color="accent" (click)= "scanObject('skuId')">
+      <mat-icon>add_a_photo</mat-icon></button>
+      </div>
+      <button mat-raised-button color="primary" (click)="captureComplete('skuId')">Search</button>
+
+     </mat-card>
+  </mat-grid-tile>
+  
+  <mat-grid-tile>
+
+    <mat-card>
+      <mat-card-title>Search Location</mat-card-title>
+      <div style="display:flex;">
+        <input type="text" class="form-control"  matInput name="locationCode" 
+        [(ngModel)]="locationCode"/>
+        <button mat-raised-button color="accent">
+        <mat-icon (click)="scanObject('locationCode')">add_a_photo</mat-icon>
+        </button>
+      </div>
+      <button mat-raised-button color="primary" (click)="captureComplete('locationCode')">Search</button>
+   
+     
+     
+</mat-card>
+  </mat-grid-tile>
+  
+  
+  </mat-grid-list>
+</div>
+ 
+
+
+</div>
+    
+<ng-template #Flag let-value="value">
+    <ng-container [ngSwitch]="getFlagIndicator(value)">
+      <span *ngSwitchCase="'green'">
+        <mat-icon style="color: greenyellow;float: right;">thumb_up</mat-icon>
+      </span>
+      <span *ngSwitchCase="'amber'">
+        <mat-icon style="color: orange;float: right;">thumbs_up_down</mat-icon>
+      </span>
+      <span *ngSwitchCase="'red'">
+        <mat-icon style="color: red;float: right;">thumb_down</mat-icon>
+      </span>
+      <span *ngSwitchDefault></span>
+    </ng-container>
+</ng-template>
+    
+    
+<ng-template #scrollMode>
+    <mat-spinner  class="margin"></mat-spinner>
+</ng-template>

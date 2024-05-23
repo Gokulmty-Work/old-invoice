@@ -1,0 +1,298 @@
+<div *ngIf="dataReady else scrollMode" style="width: 100%;height: 100%;">
+
+  <!-- // Start of container block for createEdit -->
+  <div class="container" id="createEditBlock" *ngIf="createEditMode">
+   
+    <form [formGroup]="createLocationForm"  (ngSubmit)="onSubmit()">
+  
+  
+  <!-- // Unit of Row  Start  -->
+  <!-- <div class="row">
+    <div class="col-25">
+        <label for="locationCode">Location Code</label>
+    </div>
+    <div class="col-75">
+      <input type="text" formControlName="locationCode" >
+    </div>
+  </div> -->
+  <!-- // Unit of Row  End -->
+  
+  <!-- // Unit of Row Start  -->
+  <div class="row">
+    <div class="col-25">
+        <label for="locationRef_1">{{locationRef1Const}}</label>
+    </div>
+    <div class="col-75">
+      <input type="text" formControlName="locationRef_1" >
+    </div>
+  </div>
+  <!-- // Unit of Row ends   -->
+  
+  <!-- // Unit of Row   -->
+  <div class="row">
+    <div class="col-25">
+        <label for="locationRef_1">{{locationRef2Const}}</label>
+    </div>
+    <div class="col-75">
+      <input type="text" formControlName="locationRef_2" >
+    </div>
+  </div>
+  <!-- // Unit of Row   -->
+  
+  <!-- // Unit of Row Start  -->
+  <div class="row">
+    <div class="col-25">
+        <label for="locationRef_3">{{locationRef3Const}}</label>
+    </div>
+    <div class="col-75">
+      <input type="text" formControlName="locationRef_3" >
+    </div>
+  </div>
+  <!-- // Unit of Row End  -->
+  
+  <!-- // Unit of Row Start  -->
+  <div class="row">
+    <div class="col-25">
+      <div style="padding: 5px;">
+      <span *ngIf="editMode; else createMode">
+        <button type="submit" mat-raised-button color="primary" [disabled]="createLocationForm.invalid">Update</button>
+        </span>
+      </div>
+        
+        <div style="padding: 5px;">
+        <button mat-raised-button color="warn" (click)="cancelCreateEditMode()">Cancel</button>
+        </div>
+        <ng-template #createMode>
+        <button type="submit" mat-raised-button color="primary" [disabled]="createLocationForm.invalid">Create</button>
+        </ng-template>
+    </div>
+  </div>
+  <!-- // Unit of Row End  -->
+  
+  
+  </form>
+  
+  </div>  
+  <!-- // End of container block for createEdit -->
+  
+  <!-- // Main Table block starts -->
+   <div id="tableBlock" *ngIf="!createEditMode" class="container">
+     <!-- //Check Valid length -->
+    <div id="tabularData" *ngIf="locations.length !=0 else noRecordsMsg">
+      <!-- // Search block -->
+      <div style="display:flex;"> 
+        <span class="input-group-text"> <i class="glyphicon glyphicon-search"></i></span>
+        <input
+                type="text"
+                name="searchString"
+                placeholder="Key"
+                [(ngModel)]="searchString" 
+                style="width: 250px;"
+                (change)="search()" 
+        />
+      </div>
+      <!-- // End of Search block and start of table  -->
+      <table class="table table-striped table-responsive">
+        <thead>
+        <tr>
+          <th scope="col"  style="width:150px;text-align:center"><input type="checkbox" (change)="checkPage($event,page)" id="{{'checkPage_'+page}}"> All</th>
+          <th scope="col">LocationCode</th>
+          <th scope="col">{{locationRef1Const}}</th>
+          <th scope="col">{{locationRef2Const}}</th>
+          <th scope="col">{{locationRef3Const}}</th>
+          <th scope="col">Products</th>
+          <th scope="col">Edit</th>
+          <th scope="col">Delete</th>  
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let entry of locations | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize;let i = index">
+          <td align="center" style="font-size: x-small;"><input type="checkbox" (change)="checked(i,entry,$event)" value="{{entry}}" id="{{'checkbox_'+i}}" name="{{'checkbox_'+i}}" [checked]="isSelected(entry)"></td>
+          <td >{{entry.locationCode}}</td>
+          <td >{{ entry.locationRef_1}}</td>
+          <td >{{ entry.locationRef_2}}</td>
+          <td >{{ entry.locationRef_3}}</td>
+          <td matTooltip='{{entry.skuIds}}'>{{ entry.skuIds.length}}</td>
+    
+           <td style="text-align: center;" >
+            <a class="iconButton" (click)="editEntry(entry)" alt="Edit"> <mat-icon>edit</mat-icon></a>
+          </td> 
+          
+           <td style="text-align: center;" >
+            <a class="iconButton" (click)="deleteEntry(entry)" alt="Delete"> <mat-icon>delete</mat-icon></a>
+          </td> 
+        </tr>
+       </tbody>
+    </table>
+   <!-- // End of Table  -->
+  </div>
+  <div id="pagination" class="paginationEffect" *ngIf="locations!=null && locations.length!=0">
+    <ngb-pagination class="d-flex justify-content-center" (pageChange)="onChangePage($event,page)" [collectionSize]="locations.length" [(page)]="page" [maxSize]="10" [pageSize]="pageSize" [rotate]="true" [ellipses]="true" [boundaryLinks]="false"></ngb-pagination>
+  </div>
+
+
+  </div>
+  
+  <!-- // Main table block ends -->
+  
+
+  <div id="print-button">
+    <button mat-fab color="warn" (click)="print()">
+     <mat-icon>print</mat-icon>
+   </button>
+ <p style="font-size: x-small;">Selected: {{selectedKeys.length}}</p>
+ <button (click)="emptySelection()" style="font-size: x-small;">Reset Selection</button>
+  </div>
+
+
+  <!-- // Add & print button button block -->
+  <div class="add-button"> 
+    <button mat-fab color="primary" (click)="addButtonSubmit()">
+    <mat-icon>add</mat-icon>
+    </button>
+    </div>
+ 
+    <div id="print-button">
+      <button mat-fab color="warn" (click)="print()">
+       <mat-icon>print</mat-icon>
+     </button>
+   <p style="font-size: x-small;">Selected: {{selectedKeys.length}}</p>
+   <button (click)="emptySelection()" style="font-size: x-small;">Reset Selection</button>
+    </div>
+  
+ 
+ 
+    <!-- // Add button block Ends -->
+  
+  </div> 
+  <!-- // dataReady block Ends -->
+  
+  <ng-template #scrollMode>
+    <mat-spinner  class="scroller"></mat-spinner>
+    </ng-template>
+    
+    <ng-template #noRecordsMsg>
+      <p>No Records !!! </p>
+    </ng-template>
+  
+  
+  
+  
+  
+  
+
+
+
+
+
+
+
+
+
+<!-- 
+
+-----------------------------------------------------------
+<mat-card>
+    <form [formGroup]="createLocationForm"  (ngSubmit)="onSubmit()">
+    
+    <div style="display:flex;"> 
+    
+    <span class="input-group-text">LocationCode</span>
+    <input type="text" formControlName="locationCode" >
+      
+    <span style="width: 10px;"> </span>
+    
+    <span class="input-group-text">LocationRef_1</span>
+    <input type="text" formControlName="locationRef_1" >
+      
+    <span style="width: 10px;"> </span>
+    
+    <span class="input-group-text">LocationRef_2</span>
+    <input type="text" formControlName="locationRef_2" >
+    
+    <span style="width: 10px;"> </span>
+    
+    <span class="input-group-text">LocationRef_3</span>
+    <input type="text" formControlName="locationRef_3" >
+      
+    </div>
+    
+    <div>
+    
+      <span *ngIf="editMode; else createMode">
+      <button type="submit" class="btn btn-success" [disabled]="createLocationForm.invalid">Update</button>
+      </span>
+      <ng-template #createMode>
+      <button type="submit" class="btn btn-success" [disabled]="createLocationForm.invalid">Create</button>
+      </ng-template>
+    
+    
+    </div>
+    
+    
+    
+    
+    
+    
+    </form>
+    
+    
+    </mat-card>
+    
+    <mat-card>
+    
+    <div style="display:flex;"> 
+    
+    <span class="input-group-text"> <i class="glyphicon glyphicon-search"></i></span>
+    <input
+            type="text"
+            name="searchString"
+            placeholder="Key"
+            [(ngModel)]="searchString" 
+            
+    />
+    </div>
+    
+    <div>
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          
+          <th scope="col">LocationCode</th>
+          <th scope="col">LocationRef_1</th>
+          <th scope="col">locationRef_2</th>
+          <th scope="col">locationRef_3</th>
+          <th scope="col">SKUs</th>
+          <th scope="col">Edit</th>
+       <th scope="col">Delete</th>  
+        </tr>
+      </thead>
+      <tbody>
+         <tr *ngFor="let entry of locations|  filter : 'locationCode' : searchString;">
+          <td >{{entry.locationCode}}</td>
+          <td >{{ entry.locationRef_1}}</td>
+          <td >{{ entry.locationRef_2}}</td>
+          <td >{{ entry.locationRef_3}}</td>
+          <td matTooltip='{{entry.skuIds}}'>{{ entry.skuIds.length}}</td>
+    
+           <td style="text-align: center;" >
+            <a class="iconButton" (click)="editEntry(entry)" alt="Edit"> <mat-icon>edit</mat-icon></a>
+              
+          </td> 
+          
+           <td style="text-align: center;" >
+            <a class="iconButton" (click)="deleteEntry(entry)" alt="Delete"> <mat-icon>delete</mat-icon></a>
+              
+          </td> 
+    
+        
+        </tr>
+       </tbody>
+    </table>
+    
+    
+    </div>
+    
+    </mat-card>
+    
+     -->

@@ -1,0 +1,69 @@
+
+    
+    <div class="container">
+      <h1>Transactions Report</h1>
+      <form novalidate>
+        <div class="row">
+          <div class="col-25">
+            <label for="startDate">Start Date</label>
+          </div>
+          <div class="col-75">
+            <input type="date" class="form-control" required matInput name="startDate" [(ngModel)]="startDate"/>
+        </div>
+    
+        </div>
+        
+        <div class="row">
+            <div class="col-25">
+              <label for="endDate">End Date</label>
+            </div>
+            <div class="col-75">
+              <input type="date" class="form-control" required matInput name="endDate" [(ngModel)]="endDate"/>
+          </div>
+      
+          </div>
+  
+        <div class="row">
+            <div class="col-25">
+            <button mat-raised-button color="primary" type="submit" (click)="submit()">Transaction Report</button> 
+        </div>
+    </div>
+    </form>
+  </div>
+
+<br>
+<br>
+
+
+<div class="container">
+
+  <div class="row">
+    <div class="col-25">
+      <button mat-fab color="warn" (click)="generateProductReport()">
+        <mat-icon>cloud_download</mat-icon>
+        </button>
+    </div>
+    <div class="col-75">
+      <h1>Product Master Report</h1>
+  </div>
+  </div>
+
+  <br>
+
+  <div class="row">
+    <div class="col-25">
+      <button mat-fab color="accent" (click)="getInventoryReport()">
+        <mat-icon>cloud_download</mat-icon>
+        </button>
+    </div>
+    <div class="col-75">
+      <h1>Active Inventory Report</h1>
+  </div>
+  </div>
+
+
+
+</div>
+
+      
+

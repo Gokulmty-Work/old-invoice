@@ -1,0 +1,27 @@
+<div class="container">
+
+     <div class="topright">
+          <button id="cancel-button" mat-mini-fab color="primary" mat-dialog-close style="float: right;" >
+            <mat-icon>close</mat-icon>
+          </button>
+        </div>     
+<div class="container">  
+<div [ngStyle]="{'width': wideScreen ? '200px' : '400px','height': wideScreen ? '200px' : '400px'}">
+                    <barcode-scanner-livestream
+                    type="code_128"
+                    (valueChanges)="onValueChanges($event)"
+                     (started)="(onStarted)">
+                    </barcode-scanner-livestream>
+ </div>
+</div> 
+<div class="container"> 
+ <div [hidden]="!barcodeValue">{{ barcodeValue }}</div>
+<div style="display:flex; flex-wrap: wrap;">
+<button mat-raised-button color="primary" (click)="submit()">Submit</button> 
+<span style="width: 10px;"></span>
+<button mat-raised-button type="button" (click)="cancel()">cancel</button> 
+</div>
+</div>
+ 
+</div>
+    

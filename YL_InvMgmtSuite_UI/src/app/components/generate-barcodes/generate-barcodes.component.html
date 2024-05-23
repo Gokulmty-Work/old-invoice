@@ -1,0 +1,32 @@
+
+<div class="container">
+<h2>Generating BarCodes For {{masterId}}</h2>    
+    <div class="row">
+       <div class="col-25">
+       <label for="startCount">StartCount</label>
+       </div>
+       <div class="col-75">
+        <input type="number" min=0 class="form-control" required matInput name="startCount" [(ngModel)]="startCount"/>
+       </div>
+    </div>
+   
+    <div class="row">
+        <div class="col-25">
+        <label for="endCount">EndCount</label>
+        </div>
+        <div class="col-75">
+         <input type="number" min=0 class="form-control" required matInput name="endCount" [(ngModel)]="endCount"/>
+        </div>
+     </div>
+    
+
+    
+    
+    <div class="row">
+       <div class="col-25">
+       <button mat-raised-button color="primary" type="submit" (click)="generateBarcodes()">Generate BarCodes</button> 
+       </div>
+     </div>
+  
+    </div>
+  

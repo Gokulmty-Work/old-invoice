@@ -1,0 +1,164 @@
+<div *ngIf="dataFound">
+
+<mat-card *ngIf="productInventoryMode else locationMode">
+
+  <div class="container">
+        <div class="row">
+            <div class="col-25">
+              <label>Details</label>
+            </div>
+
+            <div class="col-75">
+                <table class="table text-xsmall">
+                    <tbody>
+                        <tr style="font-size:  x-small;">
+                            <th>MasterId</th>
+                            <td>{{productInventory.masterId}}</td>
+                        </tr>
+
+                        <tr style="font-size:  x-small;">
+                            <th>SKU_ID</th>
+                            <td>{{productInventory.skuId}}</td>
+                        </tr>
+
+                        <tr style="font-size:  x-small;">
+                            <th>CheckIn_Date</th>
+                            <td>{{productInventory.checkInDate}}</td>
+                        </tr>
+
+                        <tr style="font-size:  x-small;">
+                            <th>CheckIn_Type</th>
+                            <td>{{productInventory.checkInType}}</td>
+                        </tr>
+
+                        <tr style="font-size:  x-small;">
+                            <th>LocationCode</th>
+                            <td>{{productInventory.locationCode}}</td>
+                        </tr>
+
+                        <tr style="font-size:  x-small;">
+                            <th>Entry Count</th>
+                            <td>{{productInventory.entryCount}}</td>
+                        </tr>
+
+                        <tr style="font-size:  x-small;">
+                            <th>Status</th>
+                            <td *ngIf="productInventory.checkedIn">CHECKED_IN</td>
+                            <td *ngIf="!productInventory.checkedIn">CHECKED_OUT</td>
+                        </tr>
+
+                       
+                           
+                            <tr *ngIf="!productInventory.checkedIn" style="font-size:  x-small;">
+                                <th>CheckOut_Date</th>
+                                <td>{{productInventory.checkOutDate}}</td>
+                            </tr>
+
+                            <tr style="font-size:  x-small;" *ngIf="!productInventory.checkedIn">
+                                <th>CheckOut_Type</th>
+                                <td>{{productInventory.checkOutType}}</td>
+                            </tr>
+                        
+                    </tbody>
+                </table>
+
+            </div>
+
+        </div>
+
+        <div class="row" *ngIf="productInventory.entryCount>0">
+            <div class="col-25">
+                <label>ReEntry Details</label>
+              </div>
+  
+              <div class="col-75">
+                <table class="table table-responsive">
+                    <thead>
+                    <tr>
+                     
+                      
+                      <th scope="col">ReEntry_Count</th>
+                      <th scope="col">ReEntry_Date</th>
+                      <th scope="col">LastCheckInDate</th>
+                      <th scope="col">LastCheckInType</th>
+                      <th scope="col">LastCheckOutDate</th>
+                      <th scope="col">LastCheckOutType</th>
+                                            
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr *ngFor="let log of productInventory.reEntryLogs">
+                      
+                      <td>{{ log.rentryCount }}</td>
+                      <td> {{ log.reEntryDate }} </td>
+                      <td> {{ log.lastCheckInDate }} </td>
+                      <td> {{ log.lastCheckInType }} </td>
+                      <td> {{ log.lastCheckOutDate }} </td>
+                      <td> {{ log.lastCheckOutType }} </td>
+                    </tr>
+                    </tbody>
+                  </table>
+                
+              </div>
+
+        </div>
+
+</div>
+
+
+    
+</mat-card>
+
+</div>
+<ng-template #locationMode>
+    
+  <div class="container">
+    <div class="row">
+        <div class="col-25">
+          <label>Details</label>
+        </div>
+
+        <div class="col-75">
+            <table class="table text-xsmall">
+                <tbody>
+                    <tr style="font-size:  x-small;">
+                        <th>LocationCode</th>
+                        <td>{{locationMap.locationCode}}</td>
+                    </tr>
+
+                    <tr style="font-size:  x-small;">
+                        <th>LocationRef_1</th>
+                        <td>{{locationMap.locationRef_1}}</td>
+                    </tr>
+
+                    <tr style="font-size:  x-small;">
+                        <th>LocationRef_2</th>
+                        <td>{{locationMap.locationRef_2}}</td>
+                    </tr>
+
+                    <tr style="font-size:  x-small;">
+                        <th>LocationRef_3</th>
+                        <td>{{locationMap.locationRef_3}}</td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
+</ng-template>
+
+
+    
+    
+<!-- Go Back Button-->
+<mat-card>
+        <div class="container">
+            <div class="row" >
+             <button mat-raised-button type="button" (click)="cancel()">cancel/GoBack</button>  
+            </div>
+          </div>
+</mat-card>

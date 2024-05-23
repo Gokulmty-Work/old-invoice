@@ -1,0 +1,105 @@
+
+<div id="topToolbar" class="toolbar" *ngIf="authService.isUserLoggedIn()">
+  <mat-toolbar color="primary">
+     <button  mat-mini-fab (click)="openMenu('menu')">
+      <mat-icon *ngIf="!isMenuOpened">menu</mat-icon>
+      <mat-icon *ngIf="isMenuOpened">arrow_back</mat-icon>
+    </button>
+    <span style="padding-left: 10px;">{{title}}</span>
+    <span class="example-spacer"></span>
+    <button mat-icon-button class="example-icon favorite-icon" aria-label="LogOut" (click)="logout()">
+      <mat-icon>logout</mat-icon>
+    </button>
+  </mat-toolbar>
+</div>
+
+<div id="sideNavigation" class="sidebar" *ngIf="isMenuOpened && authService.isUserLoggedIn()"
+(click)="openMenu('select')">
+
+<!-- // Navigation links start -->
+  <p class="sidenav-title"><mat-icon>account_circle</mat-icon>
+   {{authService.getLoggedInUserName()}} ({{authService.getLoggedInUserRole()}})
+  </p>
+  
+  <mat-list> 
+
+    <!-- <a mat-list-item routerLinkActive="active">{{link.title}}</a> -->
+
+    <a mat-list-item 
+    routerLink="dashboard" routerLinkActive="active">
+      <mat-icon>home</mat-icon> Dashboard
+      </a>
+ 
+
+    <a mat-list-item 
+    routerLink="productMasterList" routerLinkActive="active">
+      <mat-icon>text_fields</mat-icon> Products List
+    </a>
+
+    <a mat-list-item  
+    routerLink="checkout" routerLinkActive="active">
+      <mat-icon>exit_to_app</mat-icon> CheckOut 
+    </a>
+
+  </mat-list>
+  
+  <p class="sidenav-title">Administration</p>
+  
+  <mat-list>
+   
+   
+  
+    <a mat-list-item routerLink="changePassword" 
+    routerLinkActive="active">
+     <mat-icon>verified_user</mat-icon> Change Password
+    </a>
+   
+    <a mat-list-item routerLink="excelModule" 
+    routerLinkActive="active">
+     <mat-icon>insert_drive_file</mat-icon> File Import
+    </a>
+  
+ 
+
+  <a mat-list-item  
+  routerLink="locationMaster" 
+  routerLinkActive="active">
+   <mat-icon>location_on</mat-icon> Locations Register
+  </a>
+
+  <a mat-list-item  routerLink="transactionReport" 
+  routerLinkActive="active">
+   <mat-icon>track_changes</mat-icon> Reports
+  </a>
+ 
+  <a mat-list-item  routerLink="locationCodes" 
+  routerLinkActive="active">
+   <mat-icon>view_column</mat-icon> Generate LocCodes
+  </a>
+ 
+  <div *ngIf="authService.getLoggedInUserRole()=='ADMIN'">
+  
+    <a mat-list-item *ngIf="!authService.isLoggedUserRoleEqualsResource()" routerLink="users" 
+    routerLinkActive="active">
+     <mat-icon>supervised_user_circle</mat-icon> Manage Users
+    </a>
+  
+   <a mat-list-item *ngIf="authService.getLoggedInUserRole()=='ADMIN'" routerLink="applicationParameters" 
+   routerLinkActive="active">
+    <mat-icon>note_add</mat-icon> App Parameters
+  </a>
+  
+</div>
+ 
+  
+  </mat-list>
+
+  <!-- // Navigation links end -->
+</div>
+
+<div class="content" [ngStyle]="{'padding-left': isMenuOpened && wideScreen ? '235px' : '0'}">
+<div id="angularAppComponent">
+<router-outlet></router-outlet>
+</div>
+ </div> 
+

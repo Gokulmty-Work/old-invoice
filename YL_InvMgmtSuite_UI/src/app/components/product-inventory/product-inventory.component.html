@@ -1,0 +1,68 @@
+<div *ngIf="dataReady else scrollMode" style="width: 100%;height: 100%;">
+
+    
+    <p>Inventory for {{masterId}}</p>
+    <div id="tabularData" *ngIf="productInventoryList.length !=0 else noRecordsMsg" class="container">
+    <span>
+      <div id="searchBar" style="display:flex;width: 300px;">
+        <span class="material-icons">search</span>
+        <input type="text" name="searchString" placeholder="Type to search..." 
+        [(ngModel)]="searchString" 
+        (change)="search()" />   
+      </div>
+    
+    <div>
+      <table class="table table-striped table-responsive">
+        <thead>
+        <tr>
+          
+          <th scope="col" sortable="skuId" (sort)="onSort($event)">SKU Id</th>
+          <th scope="col" sortable="checkInDate" (sort)="onSort($event)">CheckInDate</th>
+          <th scope="col" sortable="checkInType" (sort)="onSort($event)">CheckInType</th>
+          <th scope="col" sortable="entryCount" (sort)="onSort($event)">EntryCount</th>
+          <th scope="col" sortable="entryType" (sort)="onSort($event)">EntryType</th>
+          <th scope="col" sortable="locationCode" (sort)="onSort($event)">Location</th>
+                       
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let inventory of productInventoryList | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize; " 
+       
+        (contextmenu)="onContextMenu($event, inventory)"
+        >
+          <th scope="row">{{ inventory.skuId }}</th>
+          <td> {{ inventory.checkInDate }} </td>
+          <td>{{ inventory.checkInType }}</td>
+          <td>{{ inventory.entryCount | number }}</td>
+          <td>{{ inventory.entryType }}</td>
+          <td>{{ inventory.locationCode }}</td>
+       
+        </tr>
+        </tbody>
+      </table>
+      <div style="visibility: hidden; position: fixed"
+      [style.left]="contextMenuPosition.x"
+      [style.top]="contextMenuPosition.y"
+      [matMenuTriggerFor]="contextMenu">
+      </div>
+    <mat-menu #contextMenu="matMenu" #contextMenu2="matMenu">
+        <ng-template matMenuContent let-inventory="inventory">
+        <button mat-menu-item  (click)="viewDetails(inventory)">Details</button>
+        <button mat-menu-item (click)="openLocationModule(inventory)">Capture Location</button>
+        </ng-template>
+    </mat-menu>
+    <ngb-pagination class="d-flex justify-content-center" (pageChange)="onChangePage($event,page)" [collectionSize]="productInventoryList.length" [(page)]="page" [pageSize]="pageSize" [rotate]="true" [ellipses]="false" [boundaryLinks]="true"></ngb-pagination>
+    </div>
+    </span>
+
+    </div>    
+
+</div>
+    
+    <ng-template #scrollMode>
+    <mat-spinner  class="scroller"></mat-spinner>
+    </ng-template>
+    
+    <ng-template #noRecordsMsg>
+      <p>No Records !!! </p>
+    </ng-template>

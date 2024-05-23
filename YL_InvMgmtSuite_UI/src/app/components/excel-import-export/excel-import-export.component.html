@@ -1,0 +1,78 @@
+<div style="display:flex; flex-wrap: wrap;">
+    <span style="width:20px;"></span>
+    <a style="font-size: small;color: blue;" download="Template_InventoryImport" target="_blank" href="./assets/templates/Template_InventoryImport.xlsx">
+        Download Inventory_Template
+      </a>
+  <span style="width:20px;"></span>    
+      <a style="font-size: small;color: blue;" download="Template_LocationImport" target="_blank" href="./assets/templates/Template_LocationImport.xlsx">
+        Download Locations_Template
+      </a>
+  <span style="width: 20px;"></span>     
+      <a style="font-size: small;color: blue;" download="Template_ProductMasterImport" target="_blank" href="./assets/templates/Template_ProductMasterImport.xlsx">
+        Download ProductMaster_Template
+      </a>
+
+   </div>
+
+<div class="container">
+ <div class="row">
+    <div class="col-25">
+    <label for="model">Model to Import</label>
+    </div>
+    <div class="col-75">
+    <mat-select placeholder="Select Model"  [(ngModel)]="model" name="model" style="width: 200px;"> 
+       <mat-option value="master">Product Master</mat-option>
+       <mat-option value="location">Location Maps</mat-option>
+       <mat-option value="inventory">Inventory</mat-option>
+    </mat-select>
+    </div>
+ </div>
+
+
+ <div class="row">
+    <div class="col-25">
+    <label for="fileName">Select File</label>
+    </div>
+    <div class="col-75">
+    <input type="file" (change)="onFileChange($event)" multiple="false">
+    </div>
+ </div>
+ 
+ 
+ <div class="row"  *ngIf="fileParsed">
+    <div class="col-25">
+    <button mat-raised-button color="primary" type="submit" (click)="importObjects()">Import</button> 
+    </div>
+    <div class="col-75">
+        <div *ngIf="errors.length!=0">
+            <table class="table text-xsmall">
+                <thead>
+                    <tr>
+                        <th>Object</th>
+                        <th>Error Description</th>
+                        <th>Error Code</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let errorObj of errors">
+                        <td>{{errorObj.errorKey}}</td>
+                        <td>{{errorObj.errorDescription}}</td>
+                        <td>{{errorObj.errorCode}}</td>
+
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+        </div>
+
+ </div>
+
+</div>
+
+
+ <mat-card>
+ <div *ngIf="completedStatus">
+     <p>{{finalStatus}} !!!</p>
+ </div>
+ </mat-card>

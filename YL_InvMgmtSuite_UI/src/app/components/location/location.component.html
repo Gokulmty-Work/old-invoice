@@ -1,0 +1,157 @@
+<mat-card>
+
+    <div class="container" *ngIf="locationValid" >
+        <table class="table text-xsmall">
+            <tbody>
+                <tr style="font-size:  x-small;">
+                    <th>LocationCode</th>
+                    <td>{{locationMap.locationCode}}</td>
+                </tr>
+
+                <tr style="font-size:  x-small;">
+                    <th>{{locationRef1Const}}</th>
+                    <td>{{locationMap.locationRef_1}}</td>
+                </tr>
+
+                <tr style="font-size:  x-small;">
+                    <th>{{locationRef2Const}}</th>
+                    <td>{{locationMap.locationRef_2}}</td>
+                </tr>
+
+                <tr style="font-size:  x-small;">
+                    <th>{{locationRef3Const}}</th>
+                    <td>{{locationMap.locationRef_3}}</td>
+                </tr>
+            </tbody>
+        </table>
+        <div>
+            <button mat-raised-button type="button" color="primary" (click)="captureNewCode()">Change</button>
+        </div>
+    </div>
+ 
+</mat-card>
+
+<mat-card>
+    <div class="container" *ngIf="recapture">
+        <form novalidate>
+        
+            <div class="row">
+                <div class="col-25">
+                  <label for="newLocationCode">New LocationCode</label>
+                </div>
+                <div class="col-75">
+                  <div style="display:flex; flex-wrap: wrap;">
+                  <input type="text" class="form-control" required matInput name="newLocationCode" 
+                  [(ngModel)]="newLocationCode" (change)="codeCaptureCompleted()"
+                  style="width: 200px;"/>
+                  <span style="width: 20px;"></span>
+                  <button mat-raised-button color="accent" (click) = "scanLocation()">
+                    <mat-icon>add_a_photo</mat-icon>
+                    Scan </button>
+                  </div>
+              </div>
+          
+              </div>
+    
+    
+
+
+
+
+
+
+
+
+            <!-- <div class="row">
+                <div class="col-25">
+                    <label for="entryType">EntryType</label>
+                </div>
+                <div class="col-75">
+                    <mat-select class="form-control" placeholder="Select Mode" [(ngModel)]="entryType" name="entryType"
+                        (selectionChange)="selectEntryType()" style="width: 175px;">
+                        <mat-option value="manual">Manual</mat-option>
+                        <mat-option value="image">Image</mat-option>
+                    </mat-select>
+                </div>
+
+            </div> -->
+
+            <!-- <div class="row" *ngIf="entryType=='manual'">
+                <div class="col-25">
+                    <label for="newLocationCode">New LocationCode</label>
+                </div>
+                <div class="col-75">
+                    <input type="text" class="form-control" required matInput name="newLocationCode"
+                        [(ngModel)]="newLocationCode" (change)="codeCaptureCompleted()" />
+                </div>
+            </div>
+            <div class="row" *ngIf="codeCaptured && entryType !='manual'">
+                <div class="col-25">
+                    <label for="newLocationCode">New LocationCode</label>
+                </div>
+                <div class="col-75">
+                    <input type="text" class="form-control" required matInput name="newLocationCode"
+                        [(ngModel)]="newLocationCode" (change)="codeCaptureCompleted()" />
+                </div>
+
+            </div> -->
+
+
+            <div class="row" *ngIf="codeCaptured">
+                <div class="col-25">
+                    <button mat-raised-button type="button" color="primary" (click)="searchNewCode()">Search</button>
+                </div>
+                <div class="col-75">
+                    <div *ngIf="newCodeSearchComplete">
+                    <div *ngIf="newLocationCodeValid else notFoundMode">
+                        <table class="table text-xsmall">
+                            <tbody>
+                                <tr style="font-size:  x-small;">
+                                    <th>LocationCode</th>
+                                    <td>{{newLocationMap.locationCode}}</td>
+                                </tr>
+
+                                <tr style="font-size:  x-small;">
+                                    <th>{{locationRef1Const}}</th>
+                                    <td>{{newLocationMap.locationRef_1}}</td>
+                                </tr>
+
+                                <tr style="font-size:  x-small;">
+                                    <th>{{locationRef2Const}}</th>
+                                    <td>{{newLocationMap.locationRef_2}}</td>
+                                </tr>
+
+                                <tr style="font-size:  x-small;">
+                                    <th>{{locationRef3Const}}</th>
+                                    <td>{{newLocationMap.locationRef_3}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                    </div>
+                    <button mat-raised-button type="button" color="primary" (click)="updateCode()">Update</button>
+                   
+                </div>
+            </div>
+            </div>
+
+
+    
+    </form>
+
+    </div>
+
+</mat-card>
+
+<ng-template #notFoundMode>
+    <p>Not Found in System, Add New !!! </p>
+</ng-template>
+
+
+<mat-card>
+    <div class="container">
+        <div class="row">
+            <button mat-raised-button type="button" (click)="cancel()">cancel/GoBack</button>
+        </div>
+    </div>
+</mat-card>

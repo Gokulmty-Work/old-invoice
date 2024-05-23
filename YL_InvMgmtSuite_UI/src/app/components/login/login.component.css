@@ -1,0 +1,15 @@
+.divCenterAlign
+{
+  align-items: center;
+  justify-content: center;
+  margin: auto;
+  z-index: 10;
+}
+
+.backgroundImage{
+
+ background-image: url('../../../assets/images/login_bg.jpg'); 
+ 
+ background-size: 100% 100%;
+
+}

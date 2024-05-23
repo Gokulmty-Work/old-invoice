@@ -1,0 +1,73 @@
+<mat-card>
+
+<h2>CheckIn</h2>
+<p>{{productMaster.masterId}}</p>
+
+<div class="container">
+  <!-- <form novalidate> -->
+    <div class="row">
+      <div class="col-25">
+        <label for="skuId">SkuId</label>
+      </div>
+      <div class="col-75">
+        <div style="display:flex; flex-wrap: wrap;">
+        <input type="text" class="form-control" required matInput name="skuId" [(ngModel)]="productInventory.skuId"  
+        style="width: 200px;"/>
+        <span style="width: 20px;"></span>
+        <button mat-raised-button color="accent" (click) = "scanSkuId()">
+          <mat-icon>add_a_photo</mat-icon>
+         Scan</button>
+         <span style="width: 5px;"></span>
+          <button mat-raised-button color="primary" (click) = "codeCaptureCompleted()">
+            <mat-icon>done_outline</mat-icon>
+          </button> 
+        </div>
+    </div>
+
+    </div>
+
+    <div class="row" *ngIf="codeCaptured">
+      <div class="col-25">
+        <label for="checkInType">CheckIn Type</label>
+      </div>
+      <div class="col-75">
+        <select  id="checkInType" required [(ngModel)]="productInventory.checkInType" name="checkInType">
+            <option *ngFor="let type of checkInTypes" [value] ="type">{{type}}</option>
+        </select>
+    </div>
+    </div>
+    
+    <div class="row" *ngIf="codeCaptured">
+      <div class="col-25">
+        <label for="locationCode">LocationCode (Optional)</label>
+      </div>
+      <div class="col-75">
+        <div style="display:flex; flex-wrap: wrap;">
+          <input type="text" matInput class="form-control" name="locationCode" [(ngModel)]="productInventory.locationCode"
+          style="width: 200px;"/>
+        <span style="width: 20px;"></span>
+        <button mat-raised-button color="accent" (click) = "scanLocation()">
+          <mat-icon>add_a_photo</mat-icon>
+          Scan </button>
+        </div>
+    </div>
+
+    </div>
+
+    <div class="row"  *ngIf="codeCaptured">
+        <div class="col-25">
+        <button mat-raised-button color="primary" type="submit" (click)="submit()">save</button> 
+    </div>
+</div>
+  <!-- </form> -->
+  
+</div>
+</mat-card>
+
+<mat-card>
+    <div class="container">
+        <div class="row" >
+         <button mat-raised-button type="button" (click)="cancel()">Cancel/GoBack</button>  
+        </div>
+      </div>
+</mat-card>

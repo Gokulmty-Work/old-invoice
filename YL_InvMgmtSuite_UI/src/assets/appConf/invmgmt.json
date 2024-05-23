@@ -1,0 +1,6 @@
+{"servicesURL": "http://localhost:8080/api/",
+"version":"0.0.1",
+"locationRef1":"Room",
+"locationRef2":"Rack",
+"locationRef3":"Shelf"
+}

@@ -1,0 +1,177 @@
+.mat-card {
+    text-align:left;
+    width: calc(100% - 5px);
+    height: calc(100% - 5px);
+    display: flex;
+   flex-direction: column;
+   justify-content: space-between;
+   
+ }
+
+ .notification {
+  color: white;
+  text-decoration: none;
+  position: relative;
+  display: inline-block;
+  border-radius: 2px;
+}
+
+
+.badge {
+  position: absolute;
+  top: -2px;
+  right: -2px;
+  padding: 5px 10px;
+  border-radius: 50%;
+  background: red;
+  color: white;
+  font-size: large;
+}
+ 
+ .mat-card-title{
+  text-align: center;
+  font-size: small;
+  padding: -20px;
+   margin: -20px;
+  line-height: 40px;
+  color: inherit;
+ }
+ 
+ .text-wrap {
+   text-overflow: ellipsis;
+   overflow: hidden;
+   white-space: nowrap;
+   font-size: medium;
+ }
+ 
+ 
+ .mat-list-item{
+ padding: -17%;
+ margin: -7%;
+ font-size: 14px;
+ text-align: left;
+ font-family: Egyptienne, "URWEgyptienneTOTLig", Rockwell, Palatino, Cambria, serif;
+ font-weight: 200;
+ }
+ 
+ 
+ 
+ .mat-icon{
+   width: 20px;
+   height: 20px;
+   margin: 0%;
+   padding: 0%;
+ }
+ 
+ .mat-card-subtitle{
+   font-size: medium;
+   text-align: left;
+   font-family: Egyptienne, "URWEgyptienneTOTLig", Rockwell, Palatino, Cambria, serif;
+   font-weight: 300;
+ }
+ 
+ .body {
+   font-family: Arial, Helvetica, sans-serif;
+ }
+ 
+ /* Float four columns side by side */
+ .column {
+   float: left;
+   width: 20%;
+   padding: 0 2px;
+ }
+ 
+ .row {margin: 0 -5px;}
+ 
+ /* Style the counter cards */
+ .card {
+   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+   padding: 2px;
+   text-align: center;
+   background-color: #444;
+   color: white;
+   height: 120px;
+   font-family: Egyptienne, "URWEgyptienneTOTLig", Rockwell, Palatino, Cambria, serif;
+   font-weight: 500;
+ }
+ 
+ .fa {
+   font-size:20px;
+   padding:5px;
+ }
+ 
+ .pline
+ {
+   font: 400 14px/20px Roboto, "Helvetica Neue", sans-serif;
+     font-style: normal;
+     font-variant-ligatures: normal;
+     font-variant-caps: normal;
+     font-variant-numeric: normal;
+     font-variant-east-asian: normal;
+     font-weight: 400;
+     font-stretch: normal;
+     font-size: 14px;
+     line-height: 20px;
+ }
+ 
+ .margin {
+  
+   position: relative;
+     top: 50%;
+     left: 50%;
+     -moz-transform: translateX(-50%) translateY(-50%);
+     -webkit-transform: translateX(-50%) translateY(-50%);
+     transform: translateX(-50%) translateY(-50%);
+ }
+ 
+ .btn-group .button {
+  background-color: #4CAF50; /* Green background */
+  border: 1px solid green; /* Green border */
+  color: white; /* White text */
+  padding: 2px 5px; /* Some padding */
+  cursor: pointer; /* Pointer/hand icon */
+  float: left; /* Float the buttons side by side */
+}
+
+/* .btn-group .active{
+  background-color: blue  
+} */
+
+
+
+/* Clear floats (clearfix hack) */
+.btn-group:after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+.btn-group button:not(:last-child) {
+  border-right: none; /* Prevent double borders */
+}
+
+/* Add a background color on hover */
+.btn-group button:hover {
+  background-color: #3e8e41;
+}
+
+.box {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  
+}
+
+ .items {
+align-self: stretch;
+ padding: 0;
+ margin: 0;
+}
+
+.graphbox{
+
+  width: 400px;
+  height: 100px;
+  
+
+}

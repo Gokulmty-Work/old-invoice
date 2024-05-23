@@ -1,0 +1,52 @@
+<div>
+    <table class="table table-striped table-bordered">
+        <thead>
+            <tr style="height: fit-content;">
+                <th>{{locationRef1Const}}</th>
+                <th>{{locationRef2Const}}</th>
+                <th>{{locationRef3Const}}</th>
+                <th  style="width: 60px;">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+                    
+             <tr>
+                 <td>
+                    <input  type="text"  class="form-control" id="locationRef_1" [(ngModel)]="newEntry.locationRef_1" 
+                    name="locationRef_1" />
+                </td>
+
+                <td>
+                    <input  type="text"  class="form-control" id="locationRef_2" [(ngModel)]="newEntry.locationRef_2" 
+                    name="locationRef_2" />
+                </td>
+
+                <td>
+                    <input  type="text"  class="form-control" id="locationRef_3" [(ngModel)]="newEntry.locationRef_3" 
+                    name="locationRef_3" />
+                </td>
+             
+                <td style="text-align: center;" >
+                    <a class="iconButton" (click)="addLine()" alt="Add"> <mat-icon>add</mat-icon></a>
+                  </td> 
+
+            </tr>
+    
+            <tr *ngFor="let item of locations; let i = index">
+             
+                <td><div class="form-control" >{{item.locationRef_1}}</div></td>
+                <td><div class="form-control" >{{item.locationRef_2}}</div></td>
+                <td><div class="form-control" >{{item.locationRef_3}}</div></td>
+                                                               
+                <td style="text-align: center;" >
+                    <a class="iconButton" (click)="deleteLine(item,i)" alt="Add"> <mat-icon>delete</mat-icon></a>
+                  </td> 
+            </tr>
+                        
+        </tbody>
+    </table>
+    <div>
+        <button mat-raised-button color="primary" (click)="submit()">Generate</button> 
+       
+    </div>
+</div>

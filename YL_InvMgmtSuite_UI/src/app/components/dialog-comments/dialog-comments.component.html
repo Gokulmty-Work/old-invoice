@@ -1,0 +1,10 @@
+<h1 mat-dialog-title>Comments</h1>
+<div mat-dialog-content>
+  
+  
+	<textarea matInput placeholder="Enter comments..." [(ngModel)]="data.comments" maxlength="250"></textarea>
+ 
+</div>
+<div mat-dialog-actions>
+   <button mat-button [mat-dialog-close]="data.comments" cdkFocusInitial>Done</button>
+</div>
